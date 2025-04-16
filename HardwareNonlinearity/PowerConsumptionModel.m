@@ -47,7 +47,7 @@ PPA = Power_Amplifier_power1(Pmax, epsilon, Nt, l);
 
 %%% calculating the consumed powers (Tx+Rx-->*2)
 P_tot   = PBB + PLO + BSNRF*PRFTx + Nt*PPA + BSNRF*Nt*PPS + Ps + ...
-       U*(PBB + PLO + UENRF*PRFRx +          UENRF*Nr*PPS);
+          PBB + PLO + U*(UENRF*PRFRx +          UENRF*Nr*PPS);
 
 P_u   =  (PBB + PLO + BSNRF*PRFTx + Nt*PPA + BSNRF*Nt*PPS + Ps)/U + ...
           PBB + PLO + UENRF*PRFRx +          UENRF*Nr*PPS;
