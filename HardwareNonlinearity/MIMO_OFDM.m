@@ -53,8 +53,9 @@ for i = 1:U
 end
 
 % power consumption
-[P_FC, ~] = PowerConsumptionModel(Chan, OFDM, BS, UE, OFDM.Pin);
-results.EE = results.SE/P_FC;
+[P_tot, P_u] = PowerConsumptionModel(Chan, OFDM, BS, UE, OFDM.Pin);
+results.EEu = results.SE/P_u;
+results.EEtot = sum(results.SE)/P_tot;
 
 
 end

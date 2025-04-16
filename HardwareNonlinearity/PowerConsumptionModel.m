@@ -1,4 +1,4 @@
-function [P_FC, P_AoSA] = PowerConsumptionModel(Chan, OFDM, BS, UE, SNR)
+function [P_tot, P_u] = PowerConsumptionModel(Chan, OFDM, BS, UE, Ps)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Transmit antenna number N
 Nt = BS.nAntenna;
@@ -14,6 +14,8 @@ fc = Chan.fc;
 % bandwidth
 fs = OFDM.BW;
 % fs = 1e9;
+% number of users
+U = OFDM.nUEs;
 % max time delay
 DelaySpread = Chan.delay_spread;
 % OFDM subcarrier numbers
@@ -44,10 +46,12 @@ PRFRx = 2*(PLP+PM+PADC);
 PPA = Power_Amplifier_power1(Pmax, epsilon, Nt, l);
 
 %%% calculating the consumed powers (Tx+Rx-->*2)
-P_FC   = PBB + BSNRF*PRFTx + Nt*PPA + BSNRF*Nt*PPS + PLO + SNR + ...
-         PBB + UENRF*PRFRx +          UENRF*Nr*PPS + PLO;
-P_AoSA = PBB + BSNRF*PRFTx + Nt*PPA +     Nt*PPS + PLO + SNR + ...
-         PBB + UENRF*PRFRx +              Nr*PPS + PLO;
+P_tot   = PBB + PLO + BSNRF*PRFTx + Nt*PPA + BSNRF*Nt*PPS + Ps + ...
+       U*(PBB + PLO + UENRF*PRFRx +          UENRF*Nr*PPS);
+
+P_u   =  (PBB + PLO + BSNRF*PRFTx + Nt*PPA + BSNRF*Nt*PPS + Ps)/U + ...
+          PBB + PLO + UENRF*PRFRx +          UENRF*Nr*PPS;
+
 end
 
 function PPA = Power_Amplifier_power1(Pmax, epsilon, Nt, l)

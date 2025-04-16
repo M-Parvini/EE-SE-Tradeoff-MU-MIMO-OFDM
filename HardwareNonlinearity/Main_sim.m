@@ -52,8 +52,8 @@ for nt = 1:length(TransmitAntennas)
             
                         ResultsSE_sum(SimId,p,u,IBO,b,nt) = sum(real(results.SE));
                         ResultsSE_mean(SimId,p,u,IBO,b,nt) = mean(real(results.SE));
-                        ResultsEE_sum(SimId,p,u,IBO,b,nt) = sum(real(results.EE));
-                        ResultsEE_mean(SimId,p,u,IBO,b,nt) = mean(real(results.EE));
+                        ResultsEE_sum(SimId,p,u,IBO,b,nt) = real(results.EEtot);
+                        ResultsEE_mean(SimId,p,u,IBO,b,nt) = mean(real(results.EEu));
                     end
                 end
             end
